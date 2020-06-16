@@ -1,0 +1,199 @@
+<html>
+    <head>
+        <style>
+            h2 {
+                padding: 10px;
+                margin-left: 25%;
+            }
+            button {
+                color: wheat;
+                padding: 10px;
+                background-color: darkred;
+            }
+
+            table {
+                position: fixed;
+                top: 40%;
+                left: 1%;
+                margin-left: 500px;
+                width: 300px;
+                height: 50px;
+            }
+
+            table,caption, thead, th {
+                border: 3px solid black;
+                border-radius: 3px;
+                border-collapse: collapse;
+                padding: 3px;
+                text-align: center;
+                background-color: cadetblue;
+
+            }
+
+            td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding-left: 5px;
+                padding-right: 5px;
+                text-align: center;
+                background-color: cadetblue;
+            }
+
+            form {
+                position: fixed;
+                border: 5px solid black;
+                border-radius: 6px;
+                padding-left: 30px;
+                padding-top: 0px;
+                padding-right: 7px;
+                padding-bottom: 30px;
+                width: 200px;
+                height: 400px;
+            }
+
+            p {
+                margin-left: 20px;
+            }
+
+            #dataget {
+                position: fixed;
+                top: 500px;
+                left: 80px;
+            }
+
+
+        </style>
+
+        <script>
+
+            var allDATA = [];
+            var mainData = {};
+            var userData = {};
+
+            function dataToTable() {   // Formdan alınan veriler tabloya aktarılıyor
+                document.getElementById('tdName').innerHTML = userData.name;
+                document.getElementById('tdSurname').innerHTML = userData.surname;
+                document.getElementById('tdLatitude').innerHTML = userData.latitude;
+                document.getElementById('tdLongitude').innerHTML = userData.longitude;
+                document.getElementById('tdHeight').innerHTML = userData.height;
+            }
+
+            function deleteDataOnTable() {  // Tablodaki ve Formdaki veriler temizleniyor
+                document.getElementById('tdName').innerHTML = "";
+                document.getElementById('tdSurname').innerHTML = "";
+                document.getElementById('tdLatitude').innerHTML = "";
+                document.getElementById('tdLongitude').innerHTML = "";
+                document.getElementById('tdHeight').innerHTML = "";
+
+                document.getElementById('name').value = "";
+                document.getElementById('surname').value = "";
+                document.getElementById('latitude').value = "";
+                document.getElementById('longitude').value = "";
+                document.getElementById('height').value = "";
+            }
+            
+            function getData() {  // Formdaki veriler alınıyor
+                userData = {                                              // Girilen verileri toplu şekilde tutmak için bir "userDATA" objesi oluşturduk
+                    name: document.getElementById('name').value,          // Arayüzdeki Formdan "NAME" bilgisini (id bilgisine göre) alıp obje içindeki "name" değişkenine atıyoruz
+                    surname: document.getElementById('surname').value,    // Arayüzdeki Formdan "SURNAME" bilgisini (id bilgisine göre) alıp obje içindeki "surname" değişkenine atıyoruz
+                    latitude: document.getElementById('latitude').value,  // Arayüzdeki Formdan "LATITUDE" bilgisini (id bilgisine göre) alıp obje içindeki "surname" değişkenine atıyoruz
+                    longitude: document.getElementById('longitude').value,// Arayüzdeki Formdan "LONGITUDE" bilgisini (id bilgisine göre) alıp obje içindeki "surname" değişkenine atıyoruz
+                    height: document.getElementById('height').value       // Arayüzdeki Formdan "HEIGHT" bilgisini (id bilgisine göre) alıp obje içindeki "surname" değişkenine atıyoruz
+                };
+
+                mainData = {                                              // İstenildiği üzere toplanan verileri tekrar "mainData" adında bir obje içerisine aktarıyoruz
+                    DATA: userData                                        // "DATA" değişkenine yukarıda oluşturduğumuz "userData" verisini atıyoruz
+                };
+
+                allDATA[0] = mainData;                                    // Tüm verileri bir liste içerisinde topladığımız listeye push edip ekliyoruz
+                dataToTable();
+                console.log('ALL DATA -->  ', allDATA)                    // Diğer fonksiyonlardan gelen "allData" verisini konsol ekranına yazdırıyoruz
+            }
+            
+            function updateData() {  // Veriler güncelleniyor
+                console.log('---- ALL DATA IS UPDATING ----');
+                getData();                                                // getData fonksiyonunu tekrar çalıştırarak tüm verileri baştan alıp listedeki yerine atamış oluyoruz
+            }
+
+            function deleteData() {  // Veriler siliniyor
+                console.log('---- DATA IS DELETING ----')
+                allDATA = [];                                             // Ana Listemize boş listeyi atayarak tüm verileri boşaltmış oluyoruz
+                userData = [];                                            // User Data verilerinin toplandığı objeyi boşaltıyooruz
+                deleteDataOnTable();                                      // Silme işlemine basıldığında tablodaki veri alanları da boşaltılıyor
+            }
+
+            function showData(allDATA) {                                  // Tarayıcı üzerinde verilerimizi yazdırdığımız fonksiyon
+                console.log('ALL DATA -->  ', allDATA)                    // Diğer fonksiyonlardan gelen "allData" verisini konsol ekranına yazdırıyoruz
+            }
+
+        </script>
+
+    </head>
+
+    <title>Miray YILMAZ</title>
+    <body>
+        <h2>GET DATA FROM HTML | JAVASCRIPT</h2>
+        <hr>
+
+        <form>
+            <b><h3>NAME</h3></b><input id="name" type="text" placeholder="Enter Your Name"/>                    
+            <b><h3>SURNAME</h3></b><input id="surname" type="text" placeholder="Enter Your Surname"/>
+            <b><h3>LATITUDE</h3></b><input id="latitude" type="text" placeholder="Enter Latitude"/>
+            <b><h3>LONGITUDE</h3></b><input id="longitude" type="text" placeholder="Enter Longitude"/>
+            <b><h3>HEIGHT</h3></b><input id="height" type="text" placeholder="Enter Height"/>
+            <br><br>    
+        </form>
+        <br>
+        <button id="dataget" onclick="getData()">ADD DATA</button>
+  
+        <table>
+            <caption>DATA LIST FROM ADDED FORM </caption>
+            <thead>
+                <tr>
+                   <td>NAME DATA</td>
+                   <td>SURNAME DATA</td>
+                   <td>LATITUDE DATA</td>
+                   <td>LONGITUDE DATA</td>
+                   <td>HEIGHT DATA</td>
+                   <td>UPDATE</td>
+                   <td>DELETE</td>
+                </tr>
+
+                <tr>
+                    <td>
+                         <p id="tdName">Here Name</p>
+                    </td>
+
+                    <td>
+                        <p id="tdSurname">Here Surname</p>
+                    </td>
+                    
+                    <td>
+                        <p id="tdLatitude">Here Latitude</p>
+                    </td>
+                    
+                    <td>
+                        <p id="tdLongitude">Here Longitude</p>
+                    </td> 
+                    
+                    <td>
+                        <p id="tdHeight">Here Height</p>
+                    </td> 
+
+                    <td>
+                        <button onclick="updateData()">UPDATE DATA</button> 
+                    </td>
+
+                    <td>
+                        <button onclick="deleteData()">DELETE DATA</button>
+                    </td>
+                </tr>
+            </thead>
+            
+            <tbody>
+                
+            </tbody>
+        </table>
+
+    </body>
+</html>

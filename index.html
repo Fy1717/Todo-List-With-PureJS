@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <style>
+        </style>
+
+        <script>
+
+            var allDATA = [];
+            var latitude;
+            var longitude;
+            var mainData = {};
+            var userData = {};
+            
+            function getData() {
+                navigator.geolocation.getCurrentPosition(function(position) { // "navigator.geolocation" fonsiyonu ile webden konum bilgilerini çekiyoruz 
+	                latitude = position.coords.latitude;                      // Bu fonksiyonun içinden gelen position obje içinden "LATITUDE" verisini çekiyoruz
+	                longitude = position.coords.longitude;                    // Bu fonksiyonun içinden gelen position obje içinden "LONGITUDE" verisini çekiyoruz
+                    document.getElementById('latitude').value = latitude;     // Çektiğimiz LATITUDE verisini arayüzdeki ilgili input alanına yazdırıyoruz
+                    document.getElementById('longitude').value = longitude;   // Çektiğimiz LONGITUDE verisini arayüzdeki ilgili input alanına yazdırıyoruz
+
+                    userData = {                                              // Girilen verileri toplu şekilde tutmak için bir "userDATA" objesi oluşturduk
+                        name: document.getElementById('name').value,          // Arayüzdeki Formdan "NAME" bilgisini (id bilgisine göre) alıp obje içindeki "name" değişkenine atıyoruz
+                        surname: document.getElementById('surname').value,    // Arayüzdeki Formdan "SURNAME" bilgisini (id bilgisine göre) alıp obje içindeki "surname" değişkenine atıyoruz
+                        latitude: latitude,                                   // JavaScript ile aldığımız "LATITUDE" verisini de obje içinde ilgili değişkene atıyoruz
+                        longitude: longitude                                  // Aynı şeyi "LONGITUDE" verisi için de uyguluyoruz
+                    };
+
+                    mainData = {                                              // İstenildiği üzere toplanan verileri tekrar "mainData" adında bir obje içerisine aktarıyoruz
+                        DATA: userData                                        // "DATA" değişkenine yukarıda oluşturduğumuz "userData" verisini atıyoruz
+                    };
+
+                    allDATA[0] = mainData;                                    // Tüm verileri bir liste içerisinde topladığımız listeye push edip ekliyoruz
+                });
+
+                showData(allDATA);                                            // Verilerimiz i takip edebilmek için ayrı bir fonksiyona datalarımızı parametre olarak gönderiyoruz
+            }
+
+            function updateData() {
+                console.log('---- ALL DATA IS UPDATING ----');
+                getData();                                                    // getData fonksiyonunu tekrar çalıştırarak tüm verileri baştan alıp listedeki yerine atamış oluyoruz
+            }
+
+
+            function deleteData() {
+                console.log('---- DATA IS DELETING ----')
+                allDATA = [];                                                 // Ana Listemize boş listeyi atayarak tüm verileri boşaltmış oluyoruz
+                showData(allDATA)
+            }
+
+            function showData(allDATA) {                                      // Tarayıcı üzerinde verilerimizi yazdırdığımız fonksiyon
+                console.log('ALL DATA -->  ', allDATA)                        // Diğer fonksiyonlardan gelen "allData" verisini konsol ekranına yazdırıyoruz
+            }
+
+        </script>
+
+    </head>
+
+    <title>Miray YILMAZ</title>
+    <body>
+        <h2>GET DATA FROM HTML | JAVASCRIPT</h2>
+        <hr>
+
+        <b><p>NAME</p></b><input id="name" type="text"/>                    
+        <b><p>SURNAME</p></b><input id="surname" type="text"/>
+        <b><p>LATITUDE</p></b><input id="latitude" type="text" value="Otomatic Pushing"/>
+        <b><p>LONGITUDE</p></b><input id="longitude" type="text" value="Otomatic Pushing"/>
+
+        <br><br>
+        <hr>
+
+        <button onclick="getData()">ADD DATA</button> 
+        <button onclick="updateData()">UPDATE DATA</button> 
+        <button onclick="deleteData()">DELETE DATA</button>                 
+
+    </body>
+</html>
